@@ -12,11 +12,7 @@ font-family:Arial;
 text-align:center;
 padding:20px;
 }
-
-h1{
-color:#a855f7;
-}
-
+h1{color:#a855f7;}
 textarea{
 width:90%;
 height:120px;
@@ -27,7 +23,6 @@ border:none;
 outline:none;
 margin-top:15px;
 }
-
 button{
 margin-top:15px;
 padding:12px 30px;
@@ -38,11 +33,6 @@ color:white;
 font-size:16px;
 cursor:pointer;
 }
-
-button:hover{
-background:#6d1bbf;
-}
-
 #result{
 margin-top:25px;
 background:#1a1a22;
@@ -58,7 +48,7 @@ text-align:left;
 
 <h1>AI Math Genius 🤖</h1>
 
-<textarea id="question" placeholder="Apna math question yahan likho..."></textarea>
+<textarea id="question" placeholder="Apna math question likho..."></textarea>
 <br>
 <button onclick="solve()">Solve</button>
 
@@ -67,10 +57,13 @@ text-align:left;
 <script>
 async function solve(){
 
-const userQuestion = document.getElementById("question").value;
+const question = document.getElementById("question").value;
+document.getElementById("result").innerText = "Solving...";
+
+try{
 
 const response = await fetch(
-"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyDRYjNhdrQCfM9q5f5nP4WcNuS1SS7C14s",
+"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDRYjNhdrQCfM9q5f5nP4WcNuS1SS7C14s",
 {
 method:"POST",
 headers:{ "Content-Type":"application/json" },
@@ -79,19 +72,11 @@ contents:[{
 parts:[{
 text:`
 You are a professional math tutor.
-
-Rules:
-1. Detect Hindi or English automatically.
-2. Answer in same language.
-3. Solve step by step.
-4. Show:
-   - Given
-   - Formula
-   - Steps
-   - Final Answer clearly.
+Detect Hindi or English automatically.
+Solve step by step.
 
 Question:
-${userQuestion}
+${question}
 `
 }]
 }]
@@ -100,10 +85,24 @@ ${userQuestion}
 
 const data = await response.json();
 
+if(data.candidates){
 document.getElementById("result").innerText =
 data.candidates[0].content.parts[0].text;
+}else{
+document.getElementById("result").innerText =
+"Error: API key wrong ya billing enable nahi hai.";
+}
+
+}catch(error){
+document.getElementById("result").innerText =
+"Network Error ya API issue.";
+}
+
 }
 </script>
+
+</body>
+</html></script>
 
 </body>
   </html>

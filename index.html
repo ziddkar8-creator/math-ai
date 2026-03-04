@@ -265,11 +265,10 @@
         /* --- JAVASCRIPT LOGIC --- */
 
         // APNI API KEY YAHAN DALEIN
-        const API_KEY = "AIzaSyB4Xtz7-JuQxlvBUs1a7oNSpSBmvgCrfww"; 
+        const API_KEY = "AIzaSyBkrMv6DN9Q9HpHUsm0mKy5Y1PeuW2FDHY"; 
         
         // Updated URL for Gemini 1.5 Flash
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
-
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
         async function solveProblem() {
             const question = document.getElementById('questionInput').value.trim();

@@ -1,9 +1,110 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Test</title>
+<meta charset="UTF-8">
+<title>AI Math Genius</title>
+
+<style>
+body{
+background:linear-gradient(135deg,#0f0f14,#1c1c2e);
+color:white;
+font-family:Arial;
+text-align:center;
+padding:20px;
+}
+
+h1{
+color:#a855f7;
+}
+
+textarea{
+width:90%;
+height:120px;
+border-radius:12px;
+padding:15px;
+font-size:16px;
+border:none;
+outline:none;
+margin-top:15px;
+}
+
+button{
+margin-top:15px;
+padding:12px 30px;
+border:none;
+border-radius:12px;
+background:#8a2be2;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#6d1bbf;
+}
+
+#result{
+margin-top:25px;
+background:#1a1a22;
+padding:20px;
+border-radius:12px;
+white-space:pre-wrap;
+text-align:left;
+}
+</style>
 </head>
-<body style="background:black;color:white;text-align:center;">
-<h1>Website Working ✅</h1>
+
+<body>
+
+<h1>AI Math Genius 🤖</h1>
+
+<textarea id="question" placeholder="Apna math question yahan likho..."></textarea>
+<br>
+<button onclick="solve()">Solve</button>
+
+<div id="result"></div>
+
+<script>
+async function solve(){
+
+const userQuestion = document.getElementById("question").value;
+
+const response = await fetch(
+"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyDRYjNhdrQCfM9q5f5nP4WcNuS1SS7C14s",
+{
+method:"POST",
+headers:{ "Content-Type":"application/json" },
+body:JSON.stringify({
+contents:[{
+parts:[{
+text:`
+You are a professional math tutor.
+
+Rules:
+1. Detect Hindi or English automatically.
+2. Answer in same language.
+3. Solve step by step.
+4. Show:
+   - Given
+   - Formula
+   - Steps
+   - Final Answer clearly.
+
+Question:
+${userQuestion}
+`
+}]
+}]
+})
+});
+
+const data = await response.json();
+
+document.getElementById("result").innerText =
+data.candidates[0].content.parts[0].text;
+}
+</script>
+
 </body>
-</html>
+  </html>
+  
